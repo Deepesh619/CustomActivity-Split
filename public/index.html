@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="js/postmonger.js"></script>
+</head>
+
+<body>
+    <div id="step1">
+    <table cellspacing="15">
+        <tr><td>
+        <p style = "font-family:system-ui;font-size:16px;">
+    Configure Destination Data Extension External Key: </p>
+</td>
+    <td><textarea id="DEName"></textarea></td></tr>
+
+    
+        <tr><td><p style = "font-family:system-ui;font-size:16px;">
+            Please mention the number of Primary columns you want to map: </p></td>
+            <td><select  id="pkColumnNumber">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select></td>
+            </tr>
+            <tr><td><p style = "font-family:system-ui;font-size:16px;">
+                Please mention the number of Non-Primary columns you want to map: </p></td>
+                <td><select  id="columnNumber">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select> </td>
+                </tr>
+    </table>
+ 
+</div>
+
+<div id="step2">
+ <table id="pkColumnTable" cellspacing="20">
+<tr>
+    <td style="width: 200px;"><p style = "font-family:system-ui;font-size:16px;"><b>Column Number</b></p></td>
+    <td style="width: 250px;"><p style = "font-family:system-ui;font-size:16px;"><b>Source Column</b></p></td>
+    <td><p style = "font-family:system-ui;font-size:16px;"><b>Destination Column</b></p></td>
+</tr>
+</table>
+<table id="columnTable" cellspacing="20">
+<tr>
+    <td style="width: 200px;"><p style = "font-family:system-ui;font-size:16px;"><b>Column Number</b></p></td>
+    <td style="width: 250px;"><p style = "font-family:system-ui;font-size:16px;"><b>Source Column/Default Value</b></p></td>
+    <td><p style = "font-family:system-ui;font-size:16px;"><b>Destination Column</b></p></td>
+    <td><p style = "font-family:system-ui;font-size:16px;"><b>Enable Default Value</b></p></td>
+</tr>
+ </table>
+    <script type="module" src="js/CustomActivity.js"></script>
+</div>
+</body>
+
+</html>

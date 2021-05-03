@@ -1,0 +1,98 @@
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+        "icon": "images/pulse.jpg",
+        "category": "flow"
+    },
+    "key":"REST-1",
+    "type": "REST",
+   
+    "lang": {
+        "en-US": {
+            "name": "Custom Split on Scheduled Appointments",
+            "description": "A custom Journey Builder activity using workflow API v1.1 format."
+        }
+    },
+    "arguments": {
+        "execute": {
+            "inArguments": [{
+          "DEName":"Enter the External Key",
+          "pkColumnNumber":"1",
+          "columnNumber":"1",
+          "pkSrcColumnName1" : " ",
+          "pkDestColumnName1" : " ",
+          "srcColumnName1" : " ",
+          "destColumnName1" : " "
+            }],
+            "outArguments": [],
+            "timeout": 100000,
+            "retryCount": 1,
+            "retryDelay": 10000,
+            "concurrentRequests" : 5,
+            "url": "https://pexa-test.herokuapp.com/journeybuilder/execute/",
+            "format": "json",
+            "useJwt": true
+        }
+    },
+    "configurationArguments": {
+        "save": {
+            "url": "https://pexa-test.herokuapp.com/journeybuilder/save/",
+            "body": "",
+           "header": "",
+            "useJwt": true,
+            "timeout": 10000
+        },
+        "publish": {
+            "url": "https://pexa-test.herokuapp.com/journeybuilder/publish/"
+        },
+        "validate": {
+            "url": "https://pexa-test.herokuapp.com/journeybuilder/validate/"
+        }
+        
+    },
+  
+    "wizardSteps": [
+		{"key": "dekey", "label": "Enter Data Extension key"},
+		{"key": "DEmapping", "label": "Mapping"}
+	],
+	
+  
+    "userInterfaces": {
+        "configModal": {
+            "height": 200,
+            "width": 300,
+            "fullscreen": true
+        }
+    },
+    "schema": {
+      "arguments": {
+          "execute": {
+              "inArguments": [
+                  {
+                  "myInArgument": {
+                      "dataType": "Text",
+                      "isNullable": false,
+                      "direction": "in"
+                  }
+              }, 
+              {
+                  "name": {
+                      "dataType": "Text",
+                      "isNullable": false,
+                      "direction": "in"
+                  }
+              }
+          ],
+              "outArguments": [
+                  {
+                      "name": {
+                          "dataType": "Text",
+                          "direction": "out",
+                          "access": "visible"
+                      }
+                  }
+              ]
+          }
+      }
+      }
+  }
