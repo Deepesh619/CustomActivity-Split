@@ -13,16 +13,32 @@
             "description": "A custom Journey Builder activity using workflow API v1.1 format."
         }
     },
+    "outcomes": [
+		{
+			"arguments": {
+				"branchResult": "Scheduled"
+			},
+			"metaData": {
+				"label": "Scheduled"
+			}
+		},
+		{
+			"arguments": {
+				"branchResult": "Not_Scheduled"
+			},
+			"metaData": {
+				"label": "Not Scheduled"
+			}
+		}
+	],
     "arguments": {
         "execute": {
             "inArguments": [{
-          "DEName":"Enter the External Key",
-          "pkColumnNumber":"1",
-          "columnNumber":"1",
-          "pkSrcColumnName1" : " ",
-          "pkDestColumnName1" : " ",
-          "srcColumnName1" : " ",
-          "destColumnName1" : " "
+          "srcColumnName":" ",
+          "destDEName":" ",
+          "destMappedCol":" ",
+          "destCompCol" : " ",
+          "destCompVal" : " "
             }],
             "outArguments": [],
             "timeout": 100000,

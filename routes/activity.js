@@ -93,6 +93,9 @@ exports.execute = function (req, res) {
 
   var rowData=[];
   var accesstoken=null;
+  var destCompCol=null;
+  var destCompVal=null;
+  var responseFromDE=null;
     // JSON Web Token is used to read the request from Journey Builder
       JWT(req.body, process.env.jwtSecret, (err, decoded) => {
 
@@ -105,6 +108,8 @@ exports.execute = function (req, res) {
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
           console.log('Decoded Data :'+ JSON.stringify(decoded));
             // decoded in arguments
+            destCompCol = decoded.inArguments[0].destCompCol;
+            destCompVal = decoded.inArguments[0].destCompVal;
             MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\" eq \"'+decoded.inArguments[0].srcColumnValue+'\"';
             rowData = '';        
         } else {
@@ -118,10 +123,22 @@ exports.execute = function (req, res) {
      performRequest(authEndpoint,authHost,authHeaders, postMethod, authData, function(data) {
         accesstoken = data.access_token;
         console.log('Access token is: ', accesstoken);
-        // After getting access token, calling insertRecordsIntoDE to insert the records
-        fetchRecordsfromDE(rowData,accesstoken);
+        // After getting access token, calling fetchRecordsfromDE to fetch the records
+      responseFromDE =  fetchRecordsfromDE(rowData,accesstoken);
       });
-     res.send(200, 'Execute');     
+      console.log('response from GET method : ', JSON.stringify(responseFromDE));
+      var rowcount = responseFromDE.count;
+      if(rowcount !=0){
+          if(responseFromDE.items[0].values[destCompCol] == destCompVal){
+            return res.status(200).json({branchResult: 'Scheduled'});
+          }else{
+            return res.status(200).json({branchResult: 'Not_Scheduled'});
+          }
+      }
+      else{
+        return res.status(200).json({branchResult: 'Not_Scheduled'});
+      }
+    // res.send(200, 'Execute');     
 };
 
 
@@ -188,8 +205,11 @@ function fetchRecordsfromDE(rowData,accesstoken){
     'Content-Type': 'application/json',
     'Authorization' : 'Bearer ' + accesstoken
   };
-  console.log('Row data From Inarguments'+JSON.stringify(rowData));
+  var response = '';
   performRequest(MCEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
-    console.log('Response from Request : '+ data);
+    response=data;
+    console.log('Response from Request : '+ JSON.stringify(data));
   });
+  console.log('Response sending back : '+ JSON.stringify(response));
+  return response;
 }
