@@ -22,7 +22,7 @@ var authHeaders = {
   'Content-Type': 'application/json'
 };
 var MCHost = process.env.mcHost;
-var MCEndpoint = '';
+
 var postMethod="POST";
 var getMethod="GET";
 
@@ -93,6 +93,7 @@ exports.execute = function (req, res) {
   var accesstoken=null;
   var destCompCol="";
   var destCompVal=null;
+  var MCEndpoint = '';
     // JSON Web Token is used to read the request from Journey Builder
       JWT(req.body, process.env.jwtSecret, (err, decoded) => {
 
