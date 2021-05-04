@@ -52,8 +52,7 @@
     },
   
     "wizardSteps": [
-		{"key": "dekey", "label": "Enter Data Extension key"},
-		{"key": "DEmapping", "label": "Mapping"}
+		{"key": "details", "label": "Enter Details"}
 	],
 	
   
