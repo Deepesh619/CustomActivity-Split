@@ -93,7 +93,6 @@ exports.execute = function (req, res) {
   var accesstoken=null;
   var destCompCol="";
   var destCompVal=null;
-  var responseFromDE=null;
     // JSON Web Token is used to read the request from Journey Builder
       JWT(req.body, process.env.jwtSecret, (err, decoded) => {
 
@@ -123,7 +122,7 @@ exports.execute = function (req, res) {
         accesstoken = data.access_token;
         console.log('Access token is: '+ accesstoken);
         // After getting access token, calling fetchRecordsfromDE to fetch the records
-      fetchRecordsfromDE(rowData,accesstoken,function(responseFromDE){
+      fetchRecordsfromDE(rowData,accesstoken,MCEndpoint,function(responseFromDE){
         var rowcount = responseFromDE.count;
         console.log('rowcount is: '+ rowcount);
         if(rowcount !=0){
@@ -208,12 +207,12 @@ function  performRequest(endpoint,host,headers, method, data, success) {
  * Below function is used to fetch records from DE.
  */
 
-function fetchRecordsfromDE(rowData,accesstoken,responseFromDE){
+function fetchRecordsfromDE(rowData,accesstoken,MCRecordEndpoint,responseFromDE){
   var MCHeaders = {
     'Content-Type': 'application/json',
     'Authorization' : 'Bearer ' + accesstoken
   };  
-  performRequest(MCEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
+  performRequest(MCRecordEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
     responseFromDE(data);
     console.log('Response from Request : '+ JSON.stringify(data));
   });
