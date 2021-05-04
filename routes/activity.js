@@ -25,7 +25,8 @@ var authHeaders = {
 };
 var MCHost = process.env.mcHost;
 var MCEndpoint = '';
-var method="POST";
+var postMethod="POST";
+var getMethod="GET";
 
 function logData(req) {
     exports.logExecuteData.push({
@@ -104,26 +105,8 @@ exports.execute = function (req, res) {
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
           console.log('Decoded Data :'+ JSON.stringify(decoded));
             // decoded in arguments
-            MCEndpoint = '/hub/v1/dataevents/key:'+ decoded.inArguments[0].DEName +'/rowset' ;          
-          var pkColumnNumberData =  decoded.inArguments[0].pkColumnNumber;
-          var columnNumberData =  decoded.inArguments[0].columnNumber;
-          var setKey={};
-          var setValues={};
-          for (var i=1;i<=pkColumnNumberData;i++){
-            var destColumnName = decoded.inArguments[0]['pkDestColumnName'+i];
-            var srcColumnValue = decoded.inArguments[0]['pkSrcColumnValue'+i];
-            setKey[destColumnName]=srcColumnValue;
-           }
-           for (var i=1;i<=columnNumberData;i++){
-            var destColumnName = decoded.inArguments[0]['destColumnName'+i];
-            var srcColumnValue = decoded.inArguments[0]['srcColumnValue'+i];
-            setValues[destColumnName]=srcColumnValue;
-           }
-            rowData = [{
-              "keys":setKey,
-              "values":setValues             
-                    }]; 
-                    console.log('Row Data :'+ JSON.stringify(rowData));              
+            MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\" eq \"'+decoded.inArguments[0].srcColumnValue+'\"';
+            rowData = '';        
         } else {
             console.error('inArguments invalid.');
             return res.status(400).end();
@@ -132,11 +115,11 @@ exports.execute = function (req, res) {
     
     console.log('MCEndpoint is : ', MCEndpoint);
     // Calling performPostRequest to fetch the access token
-     performPostRequest(authEndpoint,authHost,authHeaders, method, authData, function(data) {
+     performRequest(authEndpoint,authHost,authHeaders, postMethod, authData, function(data) {
         accesstoken = data.access_token;
         console.log('Access token is: ', accesstoken);
         // After getting access token, calling insertRecordsIntoDE to insert the records
-        insertRecordsIntoDE(rowData,accesstoken);
+        fetchRecordsfromDE(rowData,accesstoken);
       });
      res.send(200, 'Execute');     
 };
@@ -168,7 +151,7 @@ exports.validate = function (req, res) {
  * Below function is used to perform the rest call.
  */
 
-function  performPostRequest(endpoint,host,headers, method, data, success) {
+function  performRequest(endpoint,host,headers, method, data, success) {
   var dataString = JSON.stringify(data);
   console.log(headers);
   var options = {
@@ -200,13 +183,13 @@ function  performPostRequest(endpoint,host,headers, method, data, success) {
  * Below function is used to insert the records into DE.
  */
 
-function insertRecordsIntoDE(rowData,accesstoken){
+function fetchRecordsfromDE(rowData,accesstoken){
   var MCHeaders = {
     'Content-Type': 'application/json',
     'Authorization' : 'Bearer ' + accesstoken
   };
   console.log('Row data From Inarguments'+JSON.stringify(rowData));
-  performPostRequest(MCEndpoint,MCHost,MCHeaders, method, rowData, function(data) {
-    console.log(data);
+  performRequest(MCEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
+    console.log('Response from Request : '+ data);
   });
 }
