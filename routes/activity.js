@@ -108,7 +108,7 @@ exports.execute = function (req, res) {
             // decoded in arguments
             destCompCol = decoded.inArguments[0].destCompCol;
             destCompVal = decoded.inArguments[0].destCompVal;
-            MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\" eq \"'+decoded.inArguments[0].srcColumnValue+'\"';
+            MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\"%20eq%20\"'+decoded.inArguments[0].srcColumnValue+'\"';
             rowData = '';        
         } else {
             console.error('inArguments invalid.');
@@ -122,11 +122,9 @@ exports.execute = function (req, res) {
         accesstoken = data.access_token;
         console.log('Access token is: ', accesstoken);
         // After getting access token, calling fetchRecordsfromDE to fetch the records
-      responseFromDE =  fetchRecordsfromDE(rowData,accesstoken);
-      });
-      console.log('response from GET method : ', JSON.stringify(responseFromDE));
-      var rowcount = responseFromDE.count;
-      if(rowcount !=0){
+      fetchRecordsfromDE(rowData,accesstoken,function(responseFromDE){
+        var rowcount = responseFromDE.count;
+        if(rowcount !=0){
           if(responseFromDE.items[0].values[destCompCol] == destCompVal){
             return res.status(200).json({branchResult: 'Scheduled'});
           }else{
@@ -136,6 +134,11 @@ exports.execute = function (req, res) {
       else{
         return res.status(200).json({branchResult: 'Not_Scheduled'});
       }
+      });
+      });
+      //console.log('response from GET method : ', JSON.stringify(responseFromDE));
+     // var rowcount = responseFromDE.count;
+      
     // res.send(200, 'Execute');     
 };
 
@@ -195,19 +198,16 @@ function  performRequest(endpoint,host,headers, method, data, success) {
 }
 
 /*
- * Below function is used to insert the records into DE.
+ * Below function is used to fetch records from DE.
  */
 
-function fetchRecordsfromDE(rowData,accesstoken){
+function fetchRecordsfromDE(rowData,accesstoken,responseFromDE){
   var MCHeaders = {
     'Content-Type': 'application/json',
     'Authorization' : 'Bearer ' + accesstoken
-  };
-  var response = '';
+  };  
   performRequest(MCEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
-    response=data;
+    responseFromDE(JSON.parse(data));
     console.log('Response from Request : '+ JSON.stringify(data));
   });
-  console.log('Response sending back : '+ JSON.stringify(response));
-  return response;
 }
