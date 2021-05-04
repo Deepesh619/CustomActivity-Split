@@ -15,8 +15,6 @@ var authHost = process.env.authHost;
 var authEndpoint = '/v2/token';
 var authData = {
   "grant_type": "client_credentials",
-  "scope": null,
-  "account_id": process.env.acctId,
   "client_id": process.env.clientId,
   "client_secret":process.env.clientSecret
 };
