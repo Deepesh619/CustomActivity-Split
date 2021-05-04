@@ -120,11 +120,14 @@ exports.execute = function (req, res) {
     // Calling performPostRequest to fetch the access token
      performRequest(authEndpoint,authHost,authHeaders, postMethod, authData, function(data) {
         accesstoken = data.access_token;
-        console.log('Access token is: ', accesstoken);
+        console.log('Access token is: '+ accesstoken);
         // After getting access token, calling fetchRecordsfromDE to fetch the records
       fetchRecordsfromDE(rowData,accesstoken,function(responseFromDE){
         var rowcount = responseFromDE.count;
+        console.log('rowcount is: '+ rowcount);
         if(rowcount !=0){
+          console.log('destCompCol is: '+ responseFromDE.items[0].values[destCompCol]);
+          console.log('destCompVal is: '+ destCompVal);
           if(responseFromDE.items[0].values[destCompCol] == destCompVal){
             return res.status(200).json({branchResult: 'Scheduled'});
           }else{
