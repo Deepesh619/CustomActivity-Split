@@ -210,7 +210,7 @@ function fetchRecordsfromDE(rowData,accesstoken,responseFromDE){
     'Authorization' : 'Bearer ' + accesstoken
   };  
   performRequest(MCEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
-    responseFromDE(JSON.parse(data));
+    responseFromDE(data);
     console.log('Response from Request : '+ JSON.stringify(data));
   });
 }
