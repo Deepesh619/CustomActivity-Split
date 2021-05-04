@@ -178,6 +178,7 @@ exports.validate = function (req, res) {
 function  performRequest(endpoint,host,headers, method, data, success) {
   var dataString = JSON.stringify(data);
   console.log(headers);
+  console.log(endpoint);
   var options = {
     host: host,
     path: endpoint,
