@@ -45,24 +45,24 @@
             "retryCount": 1,
             "retryDelay": 10000,
             "concurrentRequests" : 5,
-            "url": "https://pexa-test.herokuapp.com/journeybuilder/execute/",
+            "url": "https://pexa-splitactivity-dev.herokuapp.com/journeybuilder/execute/",
             "format": "json",
             "useJwt": true
         }
     },
     "configurationArguments": {
         "save": {
-            "url": "https://pexa-test.herokuapp.com/journeybuilder/save/",
+            "url": "https://pexa-splitactivity-dev.herokuapp.com/journeybuilder/save/",
             "body": "",
            "header": "",
             "useJwt": true,
             "timeout": 10000
         },
         "publish": {
-            "url": "https://pexa-test.herokuapp.com/journeybuilder/publish/"
+            "url": "https://pexa-splitactivity-dev.herokuapp.com/journeybuilder/publish/"
         },
         "validate": {
-            "url": "https://pexa-test.herokuapp.com/journeybuilder/validate/"
+            "url": "https://pexa-splitactivity-dev.herokuapp.com/journeybuilder/validate/"
         }
         
     },
