@@ -1,5 +1,6 @@
 var connection = new Postmonger.Session();
 var eventDefinitionKey;
+var payload={};
 connection.trigger('ready');
 connection.on('initActivity',function(data){
     console.log(data);
