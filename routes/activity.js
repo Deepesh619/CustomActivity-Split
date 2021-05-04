@@ -91,7 +91,7 @@ exports.execute = function (req, res) {
 
   var rowData=[];
   var accesstoken=null;
-  var destCompCol=null;
+  var destCompCol="";
   var destCompVal=null;
   var responseFromDE=null;
     // JSON Web Token is used to read the request from Journey Builder
@@ -108,6 +108,7 @@ exports.execute = function (req, res) {
             // decoded in arguments
             destCompCol = decoded.inArguments[0].destCompCol;
             destCompVal = decoded.inArguments[0].destCompVal;
+            destCompCol = destCompCol.toLowerCase();
             MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\"%20eq%20\"'+decoded.inArguments[0].srcColumnValue+'\"';
             rowData = '';        
         } else {
@@ -129,12 +130,15 @@ exports.execute = function (req, res) {
           console.log('destCompCol is: '+ responseFromDE.items[0].values[destCompCol]);
           console.log('destCompVal is: '+ destCompVal);
           if(responseFromDE.items[0].values[destCompCol] == destCompVal){
+            console.log('In the true condition');
             return res.status(200).json({branchResult: 'Scheduled'});
           }else{
+            console.log('In the false condition');
             return res.status(200).json({branchResult: 'Not_Scheduled'});
           }
       }
       else{
+        console.log('In the outer false condition');
         return res.status(200).json({branchResult: 'Not_Scheduled'});
       }
       });
