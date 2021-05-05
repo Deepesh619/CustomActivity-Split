@@ -143,10 +143,6 @@ exports.execute = function (req, res) {
       }
       });
       });
-      //console.log('response from GET method : ', JSON.stringify(responseFromDE));
-     // var rowcount = responseFromDE.count;
-      
-    // res.send(200, 'Execute');     
 };
 
 
