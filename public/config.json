@@ -5,7 +5,7 @@
         "category": "flow"
     },
     "key":"REST-1",
-    "type": "RESTDECISION",
+    "type": "REST",
    
     "lang": {
         "en-US": {
