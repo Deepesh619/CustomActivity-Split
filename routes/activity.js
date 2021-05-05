@@ -131,10 +131,10 @@ exports.execute = function (req, res) {
           console.log('destCompVal is: '+ destCompVal);
           if(responseFromDE.items[0].values[destCompCol] == destCompVal){
             console.log('In the true condition');
-            return res.status(200).json({branchResult: 'Scheduled'});
+            return res.status(200).json({branchResult: 'scheduled'});
           }else{
             console.log('In the false condition');
-            return res.status(200).json({branchResult: 'Not_Scheduled'});
+            return res.status(200).json({branchResult: 'not_scheduled'});
           }
       }
       else{
