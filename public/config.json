@@ -4,8 +4,8 @@
         "icon": "images/pulse.jpg",
         "category": "flow"
     },
-    "key":"RESTDECISION-1",
-    "type": "RESTDECISION",
+    "key":"REST-1",
+    "type": "REST",
    
     "lang": {
         "en-US": {
