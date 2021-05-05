@@ -139,7 +139,7 @@ exports.execute = function (req, res) {
       }
       else{
         console.log('In the outer false condition');
-        return res.status(200).json({branchResult: 'Not_Scheduled'});
+        return res.status(200).json({branchResult: 'not_scheduled'});
       }
       });
       });
