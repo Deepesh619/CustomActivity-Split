@@ -10,27 +10,27 @@
     "lang": {
         "en-US": {
             "name": "Custom Split on Scheduled Appointments",
-            "description": "A custom Journey Builder activity using workflow API v1.1 format."
+            "description": "A custom Journey Builder activity using workflow API v1.1 format.",
+            "scheduledLabel" : "Scheduled",
+            "notScheduledLabel" : "Not Scheduledd"
         }
     },
     "outcomes": [
 		{
 			"arguments": {
-				"branchResult": "Scheduled"
-			},
-			"metaData": {
-				"label": "Scheduled"
+				"branchResult": "scheduled"
 			}
 		},
 		{
 			"arguments": {
-				"branchResult": "Not_Scheduled"
-			},
-			"metaData": {
-				"label": "Not Scheduled"
+				"branchResult": "not_scheduled"
 			}
 		}
 	],
+    "outcomeLabelLanguageMap": {
+        "scheduled": "scheduledLabel",
+        "not_scheduled": "notScheduledLabel"
+    },
     "arguments": {
         "execute": {
             "inArguments": [{
