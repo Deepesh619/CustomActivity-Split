@@ -47,7 +47,5 @@ function save () {
    payload['arguments'].execute.useJwt = true;
    payload['configurationArguments'].save.useJwt = true;
    payload['metaData'].isConfigured = true;
-   payload['key'] = 'REST-1';
-   payload['type'] = 'REST';
    connection.trigger('updateActivity', payload);
 }
