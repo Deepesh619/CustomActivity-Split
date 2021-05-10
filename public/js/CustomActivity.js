@@ -42,7 +42,7 @@ function save () {
     inArguments["destMappedCol"]=document.getElementById('destMappedCol').value;
     inArguments["destCompCol"]=document.getElementById('destCompCol').value;
     inArguments["destCompVal"]=document.getElementById('destCompVal').value;
-    console.log("Built inArguments are ::: " + JSON.stringify(inArguments))
+    //console.log("Built inArguments are ::: " + JSON.stringify(inArguments))
    payload['arguments'].execute.inArguments = [inArguments];  
    payload['arguments'].execute.useJwt = true;
    payload['configurationArguments'].save.useJwt = true;

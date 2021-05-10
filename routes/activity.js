@@ -117,28 +117,21 @@ exports.execute = function (req, res) {
         }
     }); 
     
-    console.log('MCEndpoint is : ', MCEndpoint);
+    
     // Calling performPostRequest to fetch the access token
      performRequest(authEndpoint,authHost,authHeaders, postMethod, authData, function(data) {
         accesstoken = data.access_token;
-        console.log('Access token is: '+ accesstoken);
         // After getting access token, calling fetchRecordsfromDE to fetch the records
       fetchRecordsfromDE(rowData,accesstoken,MCEndpoint,function(responseFromDE){
         var rowcount = responseFromDE.count;
-        console.log('rowcount is: '+ rowcount);
         if(rowcount !=0){
-          console.log('destCompCol is: '+ responseFromDE.items[0].values[destCompCol]);
-          console.log('destCompVal is: '+ destCompVal);
           if(responseFromDE.items[0].values[destCompCol] == destCompVal){
-            console.log('In the true condition');
             return res.status(200).json({branchResult: 'scheduled'});
           }else{
-            console.log('In the false condition');
             return res.status(200).json({branchResult: 'not_scheduled'});
           }
       }
       else{
-        console.log('In the outer false condition');
         return res.status(200).json({branchResult: 'not_scheduled'});
       }
       });
@@ -151,8 +144,6 @@ exports.execute = function (req, res) {
  */
 exports.publish = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
-    //console.log( req.body );
-    logData(req);
     res.send(200, 'Publish');
     console.log('Published');
 };
@@ -163,8 +154,7 @@ exports.publish = function (req, res) {
 
 exports.validate = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
-    //console.log( req.body );
-    logData(req);
+    
     res.send(200, 'Validate');
 };
 
@@ -174,8 +164,7 @@ exports.validate = function (req, res) {
 
 function  performRequest(endpoint,host,headers, method, data, success) {
   var dataString = JSON.stringify(data);
-  console.log(headers);
-  console.log(endpoint);
+  
   var options = {
     host: host,
     path: endpoint,
@@ -212,6 +201,6 @@ function fetchRecordsfromDE(rowData,accesstoken,MCRecordEndpoint,responseFromDE)
   };  
   performRequest(MCRecordEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
     responseFromDE(data);
-    console.log('Response from Request : '+ JSON.stringify(data));
+    
   });
 }
