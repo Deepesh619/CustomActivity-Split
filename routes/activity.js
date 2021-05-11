@@ -15,8 +15,6 @@ var authHost = process.env.authHost;
 var authEndpoint = '/v2/token';
 var authData = {
   "grant_type": "client_credentials",
-  "scope": null,
-  "account_id": process.env.acctId,
   "client_id": process.env.clientId,
   "client_secret":process.env.clientSecret
 };
@@ -24,8 +22,9 @@ var authHeaders = {
   'Content-Type': 'application/json'
 };
 var MCHost = process.env.mcHost;
-var MCEndpoint = '';
-var method="POST";
+
+var postMethod="POST";
+var getMethod="GET";
 
 function logData(req) {
     exports.logExecuteData.push({
@@ -92,6 +91,9 @@ exports.execute = function (req, res) {
 
   var rowData=[];
   var accesstoken=null;
+  var destCompCol="";
+  var destCompVal=null;
+  var MCEndpoint = '';
     // JSON Web Token is used to read the request from Journey Builder
       JWT(req.body, process.env.jwtSecret, (err, decoded) => {
 
@@ -104,41 +106,36 @@ exports.execute = function (req, res) {
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
           console.log('Decoded Data :'+ JSON.stringify(decoded));
             // decoded in arguments
-            MCEndpoint = '/hub/v1/dataevents/key:'+ decoded.inArguments[0].DEName +'/rowset' ;          
-          var pkColumnNumberData =  decoded.inArguments[0].pkColumnNumber;
-          var columnNumberData =  decoded.inArguments[0].columnNumber;
-          var setKey={};
-          var setValues={};
-          for (var i=1;i<=pkColumnNumberData;i++){
-            var destColumnName = decoded.inArguments[0]['pkDestColumnName'+i];
-            var srcColumnValue = decoded.inArguments[0]['pkSrcColumnValue'+i];
-            setKey[destColumnName]=srcColumnValue;
-           }
-           for (var i=1;i<=columnNumberData;i++){
-            var destColumnName = decoded.inArguments[0]['destColumnName'+i];
-            var srcColumnValue = decoded.inArguments[0]['srcColumnValue'+i];
-            setValues[destColumnName]=srcColumnValue;
-           }
-            rowData = [{
-              "keys":setKey,
-              "values":setValues             
-                    }]; 
-                    console.log('Row Data :'+ JSON.stringify(rowData));              
+            destCompCol = decoded.inArguments[0].destCompCol;
+            destCompVal = decoded.inArguments[0].destCompVal;
+            destCompCol = destCompCol.toLowerCase();
+            MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\"%20eq%20\"'+decoded.inArguments[0].srcColumnValue+'\"';
+            rowData = '';        
         } else {
             console.error('inArguments invalid.');
             return res.status(400).end();
         }
     }); 
     
-    console.log('MCEndpoint is : ', MCEndpoint);
+    
     // Calling performPostRequest to fetch the access token
-     performPostRequest(authEndpoint,authHost,authHeaders, method, authData, function(data) {
+     performRequest(authEndpoint,authHost,authHeaders, postMethod, authData, function(data) {
         accesstoken = data.access_token;
-        console.log('Access token is: ', accesstoken);
-        // After getting access token, calling insertRecordsIntoDE to insert the records
-        insertRecordsIntoDE(rowData,accesstoken);
+        // After getting access token, calling fetchRecordsfromDE to fetch the records
+      fetchRecordsfromDE(rowData,accesstoken,MCEndpoint,function(responseFromDE){
+        var rowcount = responseFromDE.count;
+        if(rowcount !=0){
+          if(responseFromDE.items[0].values[destCompCol] == destCompVal){
+            return res.status(200).json({branchResult: 'scheduled'});
+          }else{
+            return res.status(200).json({branchResult: 'not_scheduled'});
+          }
+      }
+      else{
+        return res.status(200).json({branchResult: 'not_scheduled'});
+      }
       });
-     res.send(200, 'Execute');     
+      });
 };
 
 
@@ -147,8 +144,6 @@ exports.execute = function (req, res) {
  */
 exports.publish = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
-    //console.log( req.body );
-    logData(req);
     res.send(200, 'Publish');
     console.log('Published');
 };
@@ -159,8 +154,7 @@ exports.publish = function (req, res) {
 
 exports.validate = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
-    //console.log( req.body );
-    logData(req);
+    
     res.send(200, 'Validate');
 };
 
@@ -168,9 +162,9 @@ exports.validate = function (req, res) {
  * Below function is used to perform the rest call.
  */
 
-function  performPostRequest(endpoint,host,headers, method, data, success) {
+function  performRequest(endpoint,host,headers, method, data, success) {
   var dataString = JSON.stringify(data);
-  console.log(headers);
+  
   var options = {
     host: host,
     path: endpoint,
@@ -197,16 +191,16 @@ function  performPostRequest(endpoint,host,headers, method, data, success) {
 }
 
 /*
- * Below function is used to insert the records into DE.
+ * Below function is used to fetch records from DE.
  */
 
-function insertRecordsIntoDE(rowData,accesstoken){
+function fetchRecordsfromDE(rowData,accesstoken,MCRecordEndpoint,responseFromDE){
   var MCHeaders = {
     'Content-Type': 'application/json',
     'Authorization' : 'Bearer ' + accesstoken
-  };
-  console.log('Row data From Inarguments'+JSON.stringify(rowData));
-  performPostRequest(MCEndpoint,MCHost,MCHeaders, method, rowData, function(data) {
-    console.log(data);
+  };  
+  performRequest(MCRecordEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
+    responseFromDE(data);
+    
   });
 }

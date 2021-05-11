@@ -14,63 +14,35 @@
     <table cellspacing="15">
         <tr><td>
         <p style = "font-family:system-ui;font-size:16px;">
-    Configure Destination Data Extension External Key: </p>
+        <b>Enter the source column you want to use to link with destination data extension  : </b></p>
 </td>
-    <td><textarea id="DEName"></textarea></td></tr>
+    <td><textarea id="srcColumnName"></textarea></td></tr>
 
     
         <tr><td><p style = "font-family:system-ui;font-size:16px;">
-            Please mention the number of primary columns you want to map: </p></td>
-            <td><select  id="pkColumnNumber">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select></td>
+            <b>Enter the linked data extension details :</b></p></td>
+            
             </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
-                Please mention the number of Non-Primary columns you want to map: </p></td>
-                <td><select  id="columnNumber">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select> </td>
+                Data Extension(External Key) that will be joined with source data extension</p></td>
+                <td><textarea id="destDEName"></textarea> </td>
+                </tr>
+            <tr><td><p style = "font-family:system-ui;font-size:16px;">
+                Column that will be used to join source and destination Data extension</p></td>
+                <td><textarea id="destMappedCol"></textarea> </td>
+                </tr>
+            <tr><td><p style = "font-family:system-ui;font-size:16px;">
+                Column to be Compared</p></td>
+                <td><textarea id="destCompCol"></textarea> </td>
+                </tr>
+            <tr><td><p style = "font-family:system-ui;font-size:16px;">
+                Compaired with Text</p></td>
+                <td><textarea id="destCompVal"></textarea> </td>
                 </tr>
     </table>
  
 </div>
-
-<div id="step2">
- <table id="pkColumnTable" cellspacing="20">
-<tr>
-    <td style="width: 200px;"><p style = "font-family:system-ui;font-size:16px;"><b>Column Number</b></p></td>
-    <td style="width: 250px;"><p style = "font-family:system-ui;font-size:16px;"><b>Source Column</b></p></td>
-    <td><p style = "font-family:system-ui;font-size:16px;"><b>Destination Column</b></p></td>
-</tr>
-</table>
-<table id="columnTable" cellspacing="20">
-<tr>
-    <td style="width: 200px;"><p style = "font-family:system-ui;font-size:16px;"><b>Column Number</b></p></td>
-    <td style="width: 250px;"><p style = "font-family:system-ui;font-size:16px;"><b>Source Column/Default Value</b></p></td>
-    <td><p style = "font-family:system-ui;font-size:16px;"><b>Destination Column</b></p></td>
-    <td><p style = "font-family:system-ui;font-size:16px;"><b>Enable Default Value</b></p></td>
-</tr>
- </table>
     <script type="module" src="js/CustomActivity.js"></script>
-</div>
 </body>
 
 </html>
