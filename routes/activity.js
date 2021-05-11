@@ -104,7 +104,7 @@ exports.execute = function (req, res) {
         }
 
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-          console.log('Decoded Data :'+ JSON.stringify(decoded));
+         // console.log('Decoded Data :'+ JSON.stringify(decoded));
             // decoded in arguments
             destCompCol = decoded.inArguments[0].destCompCol;
             destCompVal = decoded.inArguments[0].destCompVal;
