@@ -8,7 +8,7 @@ connection.on('initActivity',function(data){
         payload = data;
     }
     document.getElementById('srcColumnName').value= payload['arguments'].execute.inArguments[0].srcColumnName;
-    document.getElementById('destDEName').value= payload['arguments'].execute.inArguments[0].destDEName;
+   // document.getElementById('destDEName').value= payload['arguments'].execute.inArguments[0].destDEName;
     document.getElementById('destMappedCol').value= payload['arguments'].execute.inArguments[0].destMappedCol;
     document.getElementById('destCompCol').value= payload['arguments'].execute.inArguments[0].destCompCol;
     document.getElementById('destCompVal').value= payload['arguments'].execute.inArguments[0].destCompVal;
