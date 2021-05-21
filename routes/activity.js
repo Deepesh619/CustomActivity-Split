@@ -104,12 +104,13 @@ exports.execute = function (req, res) {
         }
 
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-         // console.log('Decoded Data :'+ JSON.stringify(decoded));
+          console.log('Decoded Data :'+ JSON.stringify(decoded));
             // decoded in arguments
             destCompCol = decoded.inArguments[0].destCompCol;
             destCompVal = decoded.inArguments[0].destCompVal;
             destCompCol = destCompCol.toLowerCase();
             MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\"%20eq%20\"'+decoded.inArguments[0].srcColumnValue+'\"';
+            console.log('MC EndPoint :'+ MCEndpoint);
             rowData = '';        
         } else {
             console.error('inArguments invalid.');
@@ -121,6 +122,7 @@ exports.execute = function (req, res) {
     // Calling performPostRequest to fetch the access token
      performRequest(authEndpoint,authHost,authHeaders, postMethod, authData, function(data) {
         accesstoken = data.access_token;
+        console.log('Access Token : ' + accesstoken);
         // After getting access token, calling fetchRecordsfromDE to fetch the records
       fetchRecordsfromDE(rowData,accesstoken,MCEndpoint,function(responseFromDE){
         var rowcount = responseFromDE.count;
@@ -171,7 +173,7 @@ function  performRequest(endpoint,host,headers, method, data, success) {
     method: method,
     headers: headers
   };
-
+  console.log('Options are  : ' + options);
   var req = http.request(options, function(res) {
     res.setEncoding('utf-8');
 
@@ -200,7 +202,7 @@ function fetchRecordsfromDE(rowData,accesstoken,MCRecordEndpoint,responseFromDE)
     'Authorization' : 'Bearer ' + accesstoken
   };  
   performRequest(MCRecordEndpoint,MCHost,MCHeaders, getMethod, rowData, function(data) {
-    responseFromDE(data);
-    
+    console.log('DATA IS : ' + data);
+    responseFromDE(data);    
   });
 }
