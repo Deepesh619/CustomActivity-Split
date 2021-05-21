@@ -13,7 +13,7 @@ connection.on('initActivity',function(data){
     document.getElementById('destCompCol').value= payload['arguments'].execute.inArguments[0].destCompCol;
     document.getElementById('destCompVal').value= payload['arguments'].execute.inArguments[0].destCompVal;
     getDEList();
-    document.getElementById('destDEName').value= payload['arguments'].execute.inArguments[0].destDEName;
+    
  }); 
 
 
@@ -65,6 +65,7 @@ function getDEList(){
           for(var index in obj) {
           select.options[select.options.length] = new Option(obj[index], index);// new Option(text-DEName, value-CustomerKey)
           }
+          document.getElementById('destDEName').value= payload['arguments'].execute.inArguments[0].destDEName;
       }
   }
   http.send(data); 
