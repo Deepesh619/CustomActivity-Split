@@ -7,7 +7,7 @@ connection.trigger('requestInteraction');
 connection.on('requestedInteraction',
 function(interaction) {
    if(interaction){
-     console.log('INTERATCION : '+ JSON.parse(interaction));
+     console.log('INTERATCION : '+ JSON.stringify(interaction));
     // eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
    }
 });
@@ -15,7 +15,7 @@ connection.trigger('requestTriggerEventDefinition');
 connection.on('requestedTriggerEventDefinition',
 function(eventDefinitionModel) {
    if(eventDefinitionModel){
-    console.log('eventDefinitionModel : '+ JSON.parse(eventDefinitionModel));
+    console.log('eventDefinitionModel : '+ JSON.stringify(eventDefinitionModel));
      eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
    }
 }); 
