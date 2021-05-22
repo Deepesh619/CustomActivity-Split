@@ -1,7 +1,26 @@
 var connection = new Postmonger.Session();
 var eventDefinitionKey;
 var payload={};
+
 connection.trigger('ready');
+connection.trigger('requestInteraction');
+connection.on('requestedInteraction',
+function(interaction) {
+   if(interaction){
+     console.log('INTERATCION : '+ JSON.parse(interaction));
+    // eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
+   }
+});
+connection.trigger('requestTriggerEventDefinition');
+connection.on('requestedTriggerEventDefinition',
+function(eventDefinitionModel) {
+   if(eventDefinitionModel){
+    console.log('eventDefinitionModel : '+ JSON.parse(eventDefinitionModel));
+     eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
+   }
+}); 
+
+
 connection.on('initActivity',function(data){
     console.log(data);
     if (data) {
@@ -18,15 +37,9 @@ connection.on('initActivity',function(data){
 
 
 
- // Below event is executed any and is used to get the event definition key
+ // Below event is executed any time and is used to get the event definition key
 
-connection.trigger('requestTriggerEventDefinition');
-connection.on('requestedTriggerEventDefinition',
-function(eventDefinitionModel) {
-   if(eventDefinitionModel){
-     eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
-   }
-}); 
+
 
 // Below event is executed when Done is clicked on UI
 
