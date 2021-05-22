@@ -3,20 +3,13 @@ var eventDefinitionKey;
 var payload={};
 
 connection.trigger('ready');
-connection.trigger('requestInteraction');
-connection.on('requestedInteraction',
-function(interaction) {
-   if(interaction){
-     console.log('INTERATCION : '+ JSON.stringify(interaction));
-    // eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
-   }
-});
 connection.trigger('requestTriggerEventDefinition');
 connection.on('requestedTriggerEventDefinition',
 function(eventDefinitionModel) {
    if(eventDefinitionModel){
     console.log('eventDefinitionModel : '+ JSON.stringify(eventDefinitionModel));
      eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
+     getEntrySourceColumnList(eventDefinitionModel.dataExtensionId);
    }
 }); 
 
@@ -88,8 +81,8 @@ function getDEList(){
 
 function getColumnList(option){
   var http = new XMLHttpRequest();
-  var DEName = option.value;
-  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getColumnList?DEName='+DEName;
+  var ID = option.value;
+  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getColumnList?ID='+ID+ '&DEName=true';
   var data = new FormData();
   http.open('GET', url);
   http.onreadystatechange = function() {//Call a function when the state changes.
@@ -105,6 +98,28 @@ function getColumnList(option){
           document.getElementById('destMappedCol').value= payload['arguments'].execute.inArguments[0].destMappedCol;
           document.getElementById('destCompCol').innerHTML= select.innerHTML;
           document.getElementById('destCompCol').value= payload['arguments'].execute.inArguments[0].destCompCol;
+      }
+  }
+  http.send(data); 
+}
+
+function getEntrySourceColumnList(objectID){
+  var http = new XMLHttpRequest();
+  var ID = objectID;
+  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getColumnList?ID='+ID + '&DEName=false';
+  var data = new FormData();
+  http.open('GET', url);
+  http.onreadystatechange = function() {//Call a function when the state changes.
+      if(http.readyState == 4 && http.status == 200) {
+          var obj = {};
+          obj = JSON.parse(this.responseText);
+          console.log(obj);
+          var select = document.getElementById("srcColumnName");
+          select.innerHTML = "";
+          for(var index in obj) {
+          select.options[select.options.length] = new Option(obj[index], obj[index]);
+          }
+          document.getElementById('srcColumnName').value= payload['arguments'].execute.inArguments[0].srcColumnName;
       }
   }
   http.send(data); 
