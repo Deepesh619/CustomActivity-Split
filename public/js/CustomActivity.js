@@ -3,6 +3,8 @@ var eventDefinitionKey;
 var payload={};
 
 connection.trigger('ready');
+
+ // Below event is executed any time and is used to get the event definition key
 connection.trigger('requestTriggerEventDefinition');
 connection.on('requestedTriggerEventDefinition',
 function(eventDefinitionModel) {
@@ -11,8 +13,7 @@ function(eventDefinitionModel) {
      eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
      getEntrySourceColumnList(eventDefinitionModel.dataExtensionId);
    }
-}); 
-
+});
 
 connection.on('initActivity',function(data){
     console.log(data);
@@ -27,17 +28,9 @@ connection.on('initActivity',function(data){
     getDEList();
     
  }); 
-
-
-
- // Below event is executed any time and is used to get the event definition key
-
-
-
 // Below event is executed when Done is clicked on UI
 
 connection.on('clickedNext',save);
-
 
 // save function is used to save the content from the UI
 
