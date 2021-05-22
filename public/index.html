@@ -25,11 +25,11 @@
             </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
                 Data Extension(External Key) that will be joined with source data extension</p></td>
-                <td><select id="destDEName"></select> </td>
+                <td><select id="destDEName" onchange="getColumnList(this);"></select> </td>
                 </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
                 Column that will be used to join source and destination Data extension</p></td>
-                <td><textarea id="destMappedCol"></textarea> </td>
+                <td><select id="destMappedCol"></select> </td>
                 </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
                 Column to be Compared</p></td>

@@ -70,3 +70,25 @@ function getDEList(){
   }
   http.send(data); 
 }
+
+function getColumnList(option){
+  var http = new XMLHttpRequest();
+  var DEName = option.value;
+  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getColumnList?DEName='+DEName;
+  var data = new FormData();
+  http.open('GET', url);
+  http.onreadystatechange = function() {//Call a function when the state changes.
+      if(http.readyState == 4 && http.status == 200) {
+          var obj = {};
+          obj = JSON.parse(this.responseText);
+          console.log(obj);
+          var select = document.getElementById("destMappedCol");
+          select.innerHTML = "";
+          for(var index in obj) {
+          select.options[select.options.length] = new Option(obj[index], obj[index]);
+          }
+          document.getElementById('destMappedCol').value= payload['arguments'].execute.inArguments[0].destMappedCol;
+      }
+  }
+  http.send(data); 
+}
