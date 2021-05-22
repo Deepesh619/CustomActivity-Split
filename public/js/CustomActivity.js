@@ -88,6 +88,8 @@ function getColumnList(option){
           select.options[select.options.length] = new Option(obj[index], obj[index]);
           }
           document.getElementById('destMappedCol').value= payload['arguments'].execute.inArguments[0].destMappedCol;
+          document.getElementById('destCompCol').innerHTML= select.innerHTML;
+          document.getElementById('destCompCol').value= payload['arguments'].execute.inArguments[0].destCompCol;
       }
   }
   http.send(data); 
