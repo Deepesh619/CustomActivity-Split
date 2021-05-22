@@ -66,7 +66,7 @@ function getDEList(){
           select.options[select.options.length] = new Option(obj[index], index);// new Option(text-DEName, value-CustomerKey)
           }
           document.getElementById('destDEName').value= payload['arguments'].execute.inArguments[0].destDEName;
-          if(document.getElementById('destDEName').value!=null){
+          if(document.getElementById('destDEName').value!=null || document.getElementById('destDEName').value!=''){
           getColumnList(document.getElementById('destDEName'));}
       }
   }
