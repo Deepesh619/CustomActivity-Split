@@ -25,8 +25,7 @@ connection.on('initActivity',function(data){
     document.getElementById('destMappedCol').value= payload['arguments'].execute.inArguments[0].destMappedCol;
     document.getElementById('destCompCol').value= payload['arguments'].execute.inArguments[0].destCompCol;
     document.getElementById('destCompVal').value= payload['arguments'].execute.inArguments[0].destCompVal;
-    getDEList();
-    
+    getDEList();    
  }); 
 // Below event is executed when Done is clicked on UI
 
