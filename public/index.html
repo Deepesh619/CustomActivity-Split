@@ -15,29 +15,29 @@
     <table cellspacing="15">
         <tr><td>
         <p style = "font-family:system-ui;font-size:16px;">
-        <b>Enter the source column you want to use to link with comparable data extension  : </b></p>
+        <b>Select the Field from the Source Data Extension to link to the Lookup Data Extension</b></p>
 </td>
     <td><select id="srcColumnName"></select></td></tr>
 
     
         <tr><td><p style = "font-family:system-ui;font-size:16px;">
-            <b>Enter the linked data extension details :</b></p></td>
+            <b>Enter the details for the Lookup Data Extension</b></p></td>
             
             </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
-                Data Extension(External Key) that will be joined with source data extension</p></td>
+                Data Extension Name of the Lookup Data Extension</p></td>
                 <td><select id="destDEName" onchange="getColumnList(this);"></select> </td>
                 </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
-                Column that will be used to join source and comparable Data extension</p></td>
+                Field to link on in the Lookup Data Extension</p></td>
                 <td><select id="destMappedCol"></select> </td>
                 </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
-                Column to be Compared</p></td>
+                Field to check in the Lookup Data Extension</p></td>
                 <td><select id="destCompCol"></select> </td>
                 </tr>
             <tr><td><p style = "font-family:system-ui;font-size:16px;">
-                Compaired with Text</p></td>
+                Value to check in the field in the lookup Data Extension</p></td>
                 <td><textarea id="destCompVal"></textarea> </td>
                 </tr>
     </table>
