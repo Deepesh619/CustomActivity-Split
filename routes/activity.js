@@ -110,7 +110,7 @@ exports.execute = function (req, res) {
             destCompVal = decoded.inArguments[0].destCompVal;
             destCompCol = destCompCol.toLowerCase();
             MCEndpoint = '/data/v1/customobjectdata/key/'+ decoded.inArguments[0].destDEName +'/rowset?$filter=\"'+decoded.inArguments[0].destMappedCol+'\"%20eq%20\"'+decoded.inArguments[0].srcColumnValue+'\"';
-            //console.log('MC EndPoint :'+ MCEndpoint);
+            console.log('MC EndPoint :'+ MCEndpoint);
             rowData = '';        
         } else {
             console.error('inArguments invalid.');
