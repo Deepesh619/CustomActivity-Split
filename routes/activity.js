@@ -128,8 +128,10 @@ exports.execute = function (req, res) {
         var rowcount = responseFromDE.count;
         if(rowcount !=0){
           if(responseFromDE.items[0].values[destCompCol] == destCompVal){
+            console.log('in scheduled');
             return res.status(200).json({branchResult: 'scheduled'});
           }else{
+            console.log('in else');
             return res.status(200).json({branchResult: 'not_scheduled'});
           }
       }
