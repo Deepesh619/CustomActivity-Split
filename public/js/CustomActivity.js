@@ -52,7 +52,7 @@ function save () {
 
 function getDEList(){
   var http = new XMLHttpRequest();
-  document.getElementById('test12').value = process.env.clientId;
+  document.getElementById('test12').value = '%clientId%';
   var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getDEList/';
   var data = new FormData();
   http.open('GET', url);
