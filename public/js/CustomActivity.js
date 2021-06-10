@@ -51,7 +51,7 @@ function save () {
 
 function getDEList(){
   var http = new XMLHttpRequest();
-  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getDEList/';
+  var url = 'https://mcservicecall-prod.herokuapp.com/MCService/getDEList/';
   var data = new FormData();
   http.open('GET', url);
   http.onreadystatechange = function() {//Call a function when the state changes.
@@ -73,7 +73,7 @@ function getDEList(){
 function getColumnList(option){
   var http = new XMLHttpRequest();
   var ID = option.value;
-  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getColumnList?ID='+ID+ '&DEName=true';
+  var url = 'https://mcservicecall-prod.herokuapp.com/MCService/getColumnList?ID='+ID+ '&DEName=true';
   var data = new FormData();
   http.open('GET', url);
   http.onreadystatechange = function() {//Call a function when the state changes.
@@ -97,7 +97,7 @@ function getColumnList(option){
 function getEntrySourceColumnList(objectID){
   var http = new XMLHttpRequest();
   var ID = objectID;
-  var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getColumnList?ID='+ID + '&DEName=false';
+  var url = 'https://mcservicecall-prod.herokuapp.com/MCService/getColumnList?ID='+ID + '&DEName=false';
   var data = new FormData();
   http.open('GET', url);
   http.onreadystatechange = function() {//Call a function when the state changes.
