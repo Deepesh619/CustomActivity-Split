@@ -21,7 +21,6 @@ connection.on('initActivity',function(data){
         payload = data;
     }
     document.getElementById('srcColumnName').value= payload['arguments'].execute.inArguments[0].srcColumnName;
-   // document.getElementById('destDEName').value= payload['arguments'].execute.inArguments[0].destDEName;
     document.getElementById('destMappedCol').value= payload['arguments'].execute.inArguments[0].destMappedCol;
     document.getElementById('destCompCol').value= payload['arguments'].execute.inArguments[0].destCompCol;
     document.getElementById('destCompVal').value= payload['arguments'].execute.inArguments[0].destCompVal;
@@ -52,7 +51,6 @@ function save () {
 
 function getDEList(){
   var http = new XMLHttpRequest();
-  document.getElementById('test12').value = '%clientId%';
   var url = 'https://mcservicecall-dev.herokuapp.com/MCService/getDEList/';
   var data = new FormData();
   http.open('GET', url);
